@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 1, 2, 4] Các Tab Lịch bảo trì, Khách hàng & Phân quyền và Danh mục -->
+<div th:fragment="maintenanceUsersTabs">
+  <!-- Tab 4: Lịch bảo trì & Đơn bị ảnh hưởng -->
+  <div id="subtab-maintenance" class="admin-subtab hidden">
+    <div class="grid gap-3 sm:grid-cols-6 text-sm">
+      <label class="sm:col-span-2">Chọn sân bảo trì
+        <select class="in mt-1">
+          <option value="FAC01-FB-01">FAC01-FB-01 · Sân bóng đá 1</option>
+          <option value="FAC01-BM-02" selected>FAC01-BM-02 · Sân cầu lông 2</option>
+          <option value="FAC01-VB-01">FAC01-VB-01 · Sân bóng chuyền 1</option>
+          <option value="FAC02-FB-01">FAC02-FB-01 · Sân bóng đá 2A</option>
+        </select>
+      </label>
+      <label>Ngày bảo trì<input type="date" class="in mt-1" value="2026-11-22"></label>
+      <label>Từ giờ<input class="in mt-1" value="08:00"></label>
+      <label>Đến giờ<input class="in mt-1" value="10:00"></label>
+      <label>Lý do bảo trì
+        <select class="in mt-1">
+          <option value="LIGHT">Thay hệ thống đèn</option>
+          <option value="CLEANING">Vệ sinh định kỳ</option>
+          <option value="REPAIR">Bảo dưỡng mặt sân</option>
+          <option value="INCIDENT">Xử lý sự cố kỹ thuật</option>
+        </select>
+      </label>
+    </div>
+    <button class="btn mt-3" onclick="alert('Đã cập nhật lịch bảo trì cho sân đã chọn!')">Lưu lịch bảo trì sân</button>
+    <div class="mt-5 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm">
+      <div class="font-bold text-amber-900">Đơn đặt bị ảnh hưởng bởi lịch bảo trì:</div>
+      <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+        <span>Đơn <b>01JB0001</b> · Khách: Nguyễn Văn An · Sân FAC01-FB-01</span>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn2 !py-1.5 text-xs" onclick="alert('Đã chuyển khách sang sân FAC01-FB-02!')">1. Đổi sang sân cùng môn</button>
+          <button class="btn2 !py-1.5 text-xs" onclick="alert('Đã đổi khung giờ cho khách!')">2. Đổi giờ chơi</button>
+          <button class="btn2 !py-1.5 text-xs !text-rose-600" onclick="alert('Đã hủy đơn và hoàn cọc 100% cho khách!')">3. Hủy & Hoàn cọc 100%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 5: Khách hàng & Phân quyền -->
+  <div id="subtab-users" class="admin-subtab hidden overflow-x-auto">
+    <table class="w-full">
+      <thead><tr><th>Mã khách</th><th>Họ tên</th><th>Số điện thoại</th><th>Vai trò</th><th>Số lần vắng</th><th>Ghi chú</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+      <tbody>
+        <tr><td class="font-medium text-slate-700">01JU0001</td><td>Nguyễn Văn An</td><td>0901000001</td><td>Khách hàng</td><td>1</td><td class="text-xs text-slate-500">Khách quen, hay đặt tối thứ Sáu</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td><td><button class="btn2 !py-1 text-xs" onclick="alert('Đã lưu ghi chú khách hàng!')">+ Ghi chú</button></td></tr>
+        <tr><td class="font-medium text-slate-700">01JU0004</td><td>Phạm Minh Dũng</td><td>0901000004</td><td>Khách hàng</td><td><span class="tag bg-rose-50 text-rose-700">3 (Cảnh báo)</span></td><td class="text-xs text-slate-500">Yêu cầu trả trước 100%</td><td><span class="tag bg-amber-50 text-amber-800">Hạn chế</span></td><td><button class="btn2 !py-1 text-xs !text-rose-600" onclick="alert('Đã khóa tài khoản khách hàng!')">Khóa TK</button></td></tr>
+        <tr><td class="font-medium text-slate-700">01JU0010</td><td>Võ Thanh Nhân</td><td>0901000010</td><td>Nhân viên (Cơ sở 1, 2)</td><td>0</td><td class="text-xs text-slate-500">Nhân viên trực quầy</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td><td><button class="btn2 !py-1 text-xs">Phân quyền</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tab 6: Danh mục hệ thống -->
+  <div id="subtab-categories" class="admin-subtab hidden overflow-x-auto">
+    <table class="w-full">
+      <thead><tr><th>Mã danh mục</th><th>Phân loại</th><th>Mã ký hiệu</th><th>Tên hiển thị</th><th>Quy định</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td class="font-medium text-slate-700">SPORT:FOOTBALL5</td><td>Môn thể thao</td><td>FOOTBALL5</td><td>Bóng đá 5 người</td><td class="text-xs text-slate-500">Tối đa 10 người/trận</td><td><span class="tag bg-emerald-50 text-emerald-700">Áp dụng</span></td></tr>
+        <tr><td class="font-medium text-slate-700">SPORT:BADMINTON</td><td>Môn thể thao</td><td>BADMINTON</td><td>Cầu lông</td><td class="text-xs text-slate-500">Tối đa 4 người/sân</td><td><span class="tag bg-emerald-50 text-emerald-700">Áp dụng</span></td></tr>
+        <tr><td class="font-medium text-slate-700">SPORT:VOLLEYBALL</td><td>Môn thể thao</td><td>VOLLEYBALL</td><td>Bóng chuyền</td><td class="text-xs text-slate-500">Tối đa 12 người/sân</td><td><span class="tag bg-emerald-50 text-emerald-700">Áp dụng</span></td></tr>
+        <tr><td class="font-medium text-slate-700">SLOT_TEMPLATE:DEFAULT_60M</td><td>Khung giờ mẫu</td><td>DEFAULT_60M</td><td>Khung 60 phút (05:00 – 22:00)</td><td class="text-xs text-slate-500">Mỗi khung 60 phút</td><td><span class="tag bg-emerald-50 text-emerald-700">Áp dụng</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

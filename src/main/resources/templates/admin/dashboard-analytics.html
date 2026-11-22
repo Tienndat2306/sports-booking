@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 4] Thống kê Doanh thu, Hiệu suất & Nhật ký Kiểm toán (UC20, UC26) -->
+<section th:fragment="dashboardAnalyticsSection" id="dash" class="scr">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <span class="tag bg-emerald-50 text-emerald-700">Thống kê kinh doanh</span>
+      <h1 class="mt-1 text-2xl font-bold">Thống kê Doanh thu & Hiệu suất sân</h1>
+    </div>
+    <div class="flex gap-2">
+      <select class="in !w-auto">
+        <option value="ALL">Tất cả cơ sở (FAC01 & FAC02)</option>
+        <option value="FAC01">FAC01 – Tân Phú</option>
+        <option value="FAC02">FAC02 – Tân Bình</option>
+      </select>
+      <input type="month" class="in !w-auto" value="2026-11">
+    </div>
+  </div>
+
+  <!-- 4 KPI từ bảng counter revenue_daily -->
+  <div class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-4" id="kpi"></div>
+
+  <!-- 2 Biểu đồ Doanh thu và Giờ cao điểm -->
+  <div class="mt-5 grid gap-5 md:grid-cols-2">
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <b class="text-slate-800">Doanh thu theo ngày trong tháng</b>
+        <span class="text-xs text-slate-400">Đơn vị: VNĐ</span>
+      </div>
+      <div class="mt-4 flex h-40 items-end gap-1.5" id="rev"></div>
+      <div class="mt-2 flex justify-between text-xs text-slate-400"><span>01/11</span><span>10/11</span><span>20/11</span><span>30/11</span></div>
+    </div>
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <b class="text-slate-800">Mật độ đặt sân theo khung giờ</b>
+        <span class="text-xs text-emerald-700 font-semibold">Cao điểm: 17h – 21h</span>
+      </div>
+      <div class="mt-4 flex h-40 items-end gap-1" id="hrs"></div>
+      <div class="mt-2 flex justify-between text-xs text-slate-400"><span>05h</span><span>09h</span><span>13h</span><span>17h (Cao điểm)</span><span>21h</span></div>
+    </div>
+  </div>
+
+  <!-- Bảng Nhật ký kiểm toán -->
+  <div class="card mt-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h3 class="font-bold text-slate-800">Nhật ký hoạt động hệ thống</h3>
+        <p class="text-xs text-slate-500">Ghi nhận lịch sử thao tác đặt sân, thanh toán và đổi lịch</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <input type="date" class="in !w-auto" value="2026-11-17">
+        <select id="auditTypeFilter" class="in !w-auto" onchange="renderAuditLogs()">
+          <option value="ALL">Tất cả loại sự kiện</option>
+          <option value="BOOKING_CREATE">Đặt sân mới</option>
+          <option value="PAYMENT">Thanh toán cọc</option>
+          <option value="BOOKING_CANCEL">Hủy đặt sân</option>
+          <option value="DATA_CHANGE">Thay đổi dữ liệu</option>
+          <option value="LOGIN">Đăng nhập</option>
+        </select>
+      </div>
+    </div>
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th>Thời gian (timeuuid)</th>
+            <th>Loại sự kiện</th>
+            <th>Người thực hiện</th>
+            <th>Vai trò</th>
+            <th>Đối tượng</th>
+            <th>Chi tiết thao tác</th>
+            <th>IP</th>
+          </tr>
+        </thead>
+        <tbody id="auditRows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</body>
+</html>

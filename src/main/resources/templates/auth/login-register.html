@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Màn hình Đăng nhập / Đăng ký qua Google -->
+<div th:fragment="loginRegisterCard" class="card space-y-4">
+  <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+    <div>
+      <h2 class="text-lg font-bold text-slate-800">Đăng nhập tài khoản</h2>
+      <p class="text-xs text-slate-500 mt-0.5">Xác thực nhanh chóng qua Google hoặc tài khoản hệ thống</p>
+    </div>
+    <span class="tag bg-emerald-50 text-emerald-700 text-xs font-semibold">Tài khoản</span>
+  </div>
+
+  <!-- Trạng thái tài khoản đã đăng nhập (ẩn khi chưa login) -->
+  <div id="authStatusBox" class="hidden rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 text-sm space-y-2">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="inline-block h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <b class="text-emerald-900 font-semibold" id="authStatusTitle">Đã đăng nhập thành công</b>
+      </div>
+      <button class="text-xs font-semibold text-rose-600 hover:underline cursor-pointer" onclick="handleGoogleLogout()">Đăng xuất</button>
+    </div>
+    <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 pt-1">
+      <div>Mã tài khoản: <b id="authUserId" class="text-slate-800">--</b></div>
+      <div>Họ tên: <b id="authUserName" class="text-slate-800">--</b></div>
+      <div>Email: <b id="authUserEmail" class="text-slate-800">--</b></div>
+      <div>Vai trò: <span id="authUserRole" class="tag bg-emerald-100 text-emerald-800 font-bold">CUSTOMER</span></div>
+    </div>
+  </div>
+
+  <!-- Khu vực Thao tác Đăng nhập -->
+  <div id="authActionBox" class="space-y-4">
+    
+    <!-- Nút Đăng nhập Google tiêu chuẩn + Nút Mở trang /login riêng -->
+    <div class="flex flex-col sm:flex-row gap-2.5">
+      <a href="/login" class="flex-1 flex items-center justify-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 hover:border-emerald-500 transition active:scale-95 cursor-pointer">
+        <svg class="h-4 w-4" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Đăng nhập với Google</span>
+      </a>
+
+      <a href="/login" class="flex-1 flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-4 py-2.5 text-sm font-semibold hover:bg-slate-800 transition shadow-sm">
+        <i data-lucide="external-link" class="h-4 w-4"></i>
+        <span>Đến Trang /login</span>
+      </a>
+    </div>
+
+    <!-- Hộp công cụ Chọn nhanh tài khoản mẫu -->
+    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs space-y-2">
+      <div class="flex items-center justify-between text-slate-500 font-semibold">
+        <span>⚡ Chọn nhanh tài khoản mẫu:</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button type="button" class="rounded-lg border border-slate-200 bg-white p-2 text-left hover:border-emerald-500 hover:shadow-sm transition cursor-pointer"
+                onclick="executeGoogleAuth('an.nguyen@gmail.com', 'Nguyễn Văn An', 'CUSTOMER')">
+          <div class="font-semibold text-slate-800 truncate">Nguyễn Văn An</div>
+          <div class="text-[10px] text-emerald-700">Khách hàng</div>
+        </button>
+        <button type="button" class="rounded-lg border border-slate-200 bg-white p-2 text-left hover:border-blue-500 hover:shadow-sm transition cursor-pointer"
+                onclick="executeGoogleAuth('staff.huit@gmail.com', 'Trần Thu Hà', 'STAFF')">
+          <div class="font-semibold text-slate-800 truncate">Trần Thu Hà</div>
+          <div class="text-[10px] text-blue-700">Nhân viên</div>
+        </button>
+        <button type="button" class="rounded-lg border border-slate-200 bg-white p-2 text-left hover:border-amber-500 hover:shadow-sm transition cursor-pointer"
+                onclick="executeGoogleAuth('owner.fac01@gmail.com', 'Lê Hoàng', 'OWNER')">
+          <div class="font-semibold text-slate-800 truncate">Lê Hoàng</div>
+          <div class="text-[10px] text-amber-700">Chủ sân</div>
+        </button>
+        <button type="button" class="rounded-lg border border-slate-200 bg-white p-2 text-left hover:border-purple-500 hover:shadow-sm transition cursor-pointer"
+                onclick="executeGoogleAuth('admin.huit@gmail.com', 'Ban Quản Trị HUIT', 'ADMIN')">
+          <div class="font-semibold text-slate-800 truncate">Ban Quản Trị</div>
+          <div class="text-[10px] text-purple-700">Quản trị viên</div>
+        </button>
+      </div>
+
+      <!-- Ô nhập email tùy ý -->
+      <div class="pt-2 border-t border-slate-200 flex gap-2">
+        <input id="customGoogleEmail" class="in flex-1 text-xs py-1.5" placeholder="Nhập email Google mới (vd: yourname@gmail.com)...">
+        <button type="button" class="btn text-xs px-3.5 py-1.5" onclick="loginWithCustomGoogleEmail()">Đăng nhập</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

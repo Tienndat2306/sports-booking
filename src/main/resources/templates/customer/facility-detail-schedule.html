@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 2] Xem Lịch Trống, Giữ Chỗ Tạm 5 Phút & Danh Sách Chờ (UC09, UC10, UC13, UC19) -->
+<section th:fragment="facilityScheduleSection" id="schedule" class="scr">
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <div class="flex items-center gap-2">
+        <select id="schedFacSelect" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-lg font-bold outline-none" onchange="changeScheduleFacility(this.value)">
+          <option value="FAC01">FAC01 – Tổ hợp Thể thao HUIT Cơ sở 1 (Tân Phú)</option>
+          <option value="FAC02">FAC02 – Cụm Sân Bóng Đá HUIT Cơ sở 2 (Tân Bình)</option>
+        </select>
+      </div>
+      <p class="mt-1 text-sm text-slate-500" id="schedFacAddr">140 Lê Trọng Tấn, Tân Phú, TP.HCM · Giờ mở cửa: 05:00 – 22:00 (17 khung/ngày)</p>
+    </div>
+    <div class="flex flex-col items-end gap-1">
+      <span class="tag bg-emerald-50 text-emerald-700">Chính sách: Cọc 30% · Giữ chỗ 5 phút</span>
+    </div>
+  </div>
+
+  <!-- Chọn môn và chọn ngày -->
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-2" id="schedSportTabs"></div>
+    <div class="flex flex-wrap gap-1.5" id="days"></div>
+  </div>
+
+  <!-- Chú thích trạng thái khung giờ -->
+  <div class="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-600">
+    <span><i class="mr-1.5 inline-block h-3 w-3 rounded border border-slate-300 bg-white align-middle"></i>Trống (Click để chọn)</span>
+    <span><i class="mr-1.5 inline-block h-3 w-3 rounded bg-emerald-600 align-middle"></i>Đang chọn</span>
+    <span><i class="mr-1.5 inline-block h-3 w-3 rounded border border-amber-500 bg-amber-100 align-middle"></i>Đang giữ chỗ (Có thể đăng ký chờ)</span>
+    <span><i class="mr-1.5 inline-block h-3 w-3 rounded border border-rose-400 bg-rose-100 align-middle"></i>Đã đặt (Có thể đăng ký chờ)</span>
+    <span><i class="mr-1.5 inline-block h-3 w-3 rounded bg-slate-200 align-middle"></i>Bảo trì</span>
+  </div>
+
+  <!-- Ma trận 17 khung giờ (05:00 - 21:00) -->
+  <div class="card mt-3 overflow-x-auto" id="grid"></div>
+
+  <!-- Thanh tổng kết & Giữ chỗ tạm thời -->
+  <div class="sticky bottom-4 mt-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-emerald-200 bg-white p-4 shadow-lg">
+    <div>
+      <div class="text-xs font-semibold uppercase text-emerald-700" id="sumCourt">Sân: FAC01-FB-02 · Ngày 20/11/2026</div>
+      <div class="text-sm text-slate-600" id="sum">Đã chọn 2 khung giờ liền nhau</div>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="text-right">
+        <div class="text-lg font-bold text-slate-900" id="tot">700.000đ</div>
+        <div class="text-xs text-emerald-700" id="dep">Cần cọc (30%): 210.000đ</div>
+      </div>
+      <button class="btn" onclick="holdAndCheckout()"><i data-lucide="lock" class="h-4 w-4"></i>Giữ chỗ 5 phút</button>
+    </div>
+  </div>
+
+  <!-- Đánh giá sân -->
+  <div class="card mt-6">
+    <div class="flex items-center justify-between">
+      <h3 class="font-bold text-slate-800">Đánh giá từ người chơi</h3>
+      <span class="tag bg-amber-50 text-amber-700">★ 4.8 / 5.0</span>
+    </div>
+    <div class="mt-3 grid gap-3 md:grid-cols-2 text-sm">
+      <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
+        <div class="flex items-center justify-between">
+          <b>Nguyễn Văn An · <span class="text-emerald-700">FAC01-FB-01</span></b>
+          <span class="text-amber-500 font-bold">★★★★★</span>
+        </div>
+        <p class="mt-1 text-slate-600 text-xs">Mặt cỏ nhân tạo mới, đèn sáng và có chỗ đậu xe rộng rãi. (2026-11-17)</p>
+      </div>
+      <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
+        <div class="flex items-center justify-between">
+          <b>Trần Thị Bình · <span class="text-emerald-700">FAC01-BM-01</span></b>
+          <span class="text-amber-500 font-bold">★★★★★</span>
+        </div>
+        <p class="mt-1 text-slate-600 text-xs">Sân cầu lông thảm PVC chuẩn, máy lạnh mát, có cho thuê vợt tại quầy. (2026-11-15)</p>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

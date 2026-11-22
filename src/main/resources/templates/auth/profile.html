@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 1] Màn hình Hồ sơ cá nhân & Trình độ thể thao (UC03) -->
+<div th:fragment="profileCard" class="card space-y-4">
+  <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+    <div>
+      <h2 class="text-lg font-bold">Hồ sơ cá nhân & Trình độ môn chơi</h2>
+      <p class="text-xs text-slate-500 mt-0.5">Cập nhật thông tin và trình độ để nhận gợi ý bạn chơi phù hợp</p>
+    </div>
+    <span class="tag bg-emerald-50 text-emerald-700">Thông tin cá nhân</span>
+  </div>
+  <div class="grid gap-3 sm:grid-cols-2 text-sm">
+    <label>Mã người dùng<input class="in mt-1 bg-slate-50" value="01JU0001" readonly></label>
+    <label>Họ và tên<input id="profName" class="in mt-1" value="Nguyễn Văn An"></label>
+    <label>Số điện thoại<input class="in mt-1" value="0901000001"></label>
+    <label>Email<input class="in mt-1" value="an@example.com"></label>
+  </div>
+  <div class="rounded-xl bg-emerald-50/60 border border-emerald-100 p-3.5 text-xs space-y-2">
+    <b class="text-emerald-900">Trình độ môn chơi (Cấp độ 1 – 5):</b>
+    <div class="grid grid-cols-3 gap-2.5 pt-1">
+      <label class="font-medium text-slate-700">Bóng đá 5v5
+        <select class="in mt-1">
+          <option value="1">Cấp 1 – Mới chơi</option>
+          <option value="2">Cấp 2 – Trung bình</option>
+          <option value="3" selected>Cấp 3 – Khá</option>
+          <option value="4">Cấp 4 – Tốt</option>
+          <option value="5">Cấp 5 – Bán chuyên</option>
+        </select>
+      </label>
+      <label class="font-medium text-slate-700">Cầu lông
+        <select class="in mt-1">
+          <option value="1">Cấp 1 – Mới chơi</option>
+          <option value="2" selected>Cấp 2 – Trung bình</option>
+          <option value="3">Cấp 3 – Khá</option>
+          <option value="4">Cấp 4 – Tốt</option>
+        </select>
+      </label>
+      <label class="font-medium text-slate-700">Bóng chuyền
+        <select class="in mt-1">
+          <option value="0" selected>Chưa đăng ký</option>
+          <option value="2">Cấp 2 – Trung bình</option>
+          <option value="3">Cấp 3 – Khá</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="flex justify-end">
+    <button class="btn" onclick="$('#currentUserLabel').textContent=$('#profName').value;alert('Đã lưu thông tin hồ sơ thành công!')">Lưu hồ sơ cá nhân</button>
+  </div>
+</div>
+</body>
+</html>

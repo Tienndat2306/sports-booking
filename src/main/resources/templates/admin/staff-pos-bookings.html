@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 2 & 4] Quầy nhân viên trực sân - Staff POS (UC11, UC14, UC22, UC23) -->
+<section th:fragment="staffPosSection" id="staff" class="scr">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <span class="tag bg-emerald-50 text-emerald-700">Trực quầy</span>
+      <h1 class="mt-1 text-2xl font-bold">Quầy điều hành trực sân</h1>
+    </div>
+    <button class="btn" onclick="openModal('walkinModal')"><i data-lucide="user-plus" class="h-4 w-4"></i>+ Đặt hộ tại quầy</button>
+  </div>
+
+  <!-- Cảnh báo đơn quá hạn ân hạn -->
+  <div class="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900" id="noshowBanner">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="alert-triangle" class="h-5 w-5 text-amber-700"></i>
+        <div>
+          <b>Cảnh báo khách chưa check-in quá 15 phút:</b>
+          <div class="text-xs">Đơn <b>BK-20261120-0003</b> · Khách: <b>Phạm Minh Dũng (0901000004)</b> · Sân FAC01-FB-02 (Khung 17:00) chưa Check-in.</div>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn2 !py-1.5 text-xs" onclick="handleNoShow(true)">Miễn trừ & Hoàn cọc</button>
+        <button class="btn !bg-rose-600 hover:!bg-rose-700 !py-1.5 text-xs" onclick="handleNoShow(false)">Đánh dấu Không đến (NO_SHOW)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-3">
+    <input id="staffSearch" class="in max-w-md" placeholder="Tìm theo mã đơn (BK-...) hoặc SĐT khách (0901...)" oninput="renderStaffTable()">
+  </div>
+
+  <div class="card mt-4 overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th>Mã đơn</th>
+          <th>Khách hàng</th>
+          <th>Sân & Ngày</th>
+          <th>Khung giờ</th>
+          <th>Nguồn</th>
+          <th>Thanh toán</th>
+          <th>Trạng thái</th>
+          <th class="text-right">Thao tác quầy</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</section>
+</body>
+</html>

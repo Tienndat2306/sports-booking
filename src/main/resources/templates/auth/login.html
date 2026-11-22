@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập – HUIT Sports</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.453.0"></script>
+  <!-- Google Identity Services (GIS) SDK chính thức -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            serif: ['"Newsreader"', 'Georgia', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #f8fafc; }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 antialiased flex flex-col justify-between">
+
+  <!-- 1. Header (Logo Cúp Xanh lá truyền thống của dự án) -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="h-9 w-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-200 transition-transform group-hover:scale-105">
+        <i data-lucide="trophy" class="h-5 w-5"></i>
+      </div>
+      <span class="text-xl font-bold tracking-tight text-slate-900">HUIT Sports</span>
+    </a>
+
+    <!-- Ngôn ngữ -->
+    <div class="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-600 shadow-sm">
+      <i data-lucide="languages" class="h-4 w-4 text-slate-400"></i>
+      <span class="font-medium text-slate-900">Tiếng Việt</span>
+      <span class="text-slate-300">|</span>
+      <span class="text-slate-400 hover:text-slate-700 cursor-pointer">English</span>
+    </div>
+  </header>
+
+  <!-- 2. Nội dung chính: 2 Cột lấy cảm hứng từ Claude -->
+  <main class="w-full max-w-7xl mx-auto px-6 py-4 flex-1 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+    
+    <!-- Cột trái: Tiêu đề Serif lớn + Hộp Đăng nhập -->
+    <div class="w-full lg:w-1/2 max-w-lg flex flex-col justify-center">
+      <h1 class="text-4xl sm:text-5xl font-serif text-slate-900 leading-[1.15] tracking-tight">
+        Sẵn sàng cho những<br>trận đấu phía trước
+      </h1>
+      <p class="mt-4 text-slate-600 text-base font-sans font-normal leading-relaxed">
+        Nền tảng đặt sân thể thao thông minh, đồng hành cùng đam mê và nâng tầm trải nghiệm của bạn.
+      </p>
+
+      <!-- Hộp Form Đăng nhập -->
+      <div class="mt-8 w-full rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4 font-sans">
+        
+        <!-- NÚT GOOGLE CHUẨN THỰC TẾ (Google Identity Services) -->
+        <div class="space-y-2">
+          <!-- Vùng render nút bấm chính thức của Google -->
+          <div id="googleButtonDiv" class="w-full flex justify-center min-h-[44px]"></div>
+
+          <!-- Nút bấm dự phòng khi chưa nạp Google Client ID -->
+          <div id="googleFallbackDiv" class="w-full">
+            <button type="button" onclick="handleGoogleButtonClick()" class="w-full flex items-center justify-center gap-3 rounded-full bg-white hover:bg-slate-50 border border-slate-300 py-2.5 px-4 text-sm font-semibold text-slate-700 transition active:scale-[0.99] shadow-sm cursor-pointer">
+              <svg class="h-4 w-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Tiếp tục với Google</span>
+            </button>
+          </div>
+
+          <!-- Dòng trợ giúp cấu hình Client ID -->
+          <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
+            <span id="clientIdStatusText">Google OAuth 2.0</span>
+            <button type="button" onclick="promptConfigureClientId()" class="text-emerald-700 hover:underline font-medium">⚙️ Cài đặt Client ID</button>
+          </div>
+        </div>
+
+        <!-- Divider HOẶC -->
+        <div class="relative flex items-center justify-center my-2">
+          <div class="w-full border-t border-slate-200"></div>
+          <span class="absolute bg-white px-3 text-[11px] font-semibold text-slate-400 tracking-wider">HOẶC</span>
+        </div>
+
+        <!-- Nhập email -->
+        <div class="space-y-2.5">
+          <input id="emailInput" type="email" placeholder="Nhập email của bạn (vd: yourname@gmail.com)"
+                 class="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none transition focus:border-emerald-600 focus:bg-white">
+          
+          <button type="button" onclick="loginWithCustomEmail()" class="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3 px-4 text-sm font-semibold text-white transition active:scale-[0.99] cursor-pointer shadow-sm">
+            Tiếp tục bằng email
+          </button>
+        </div>
+
+        <!-- Hộp tài khoản demo nhanh -->
+        <div class="pt-1">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">⚡ Chọn nhanh tài khoản mẫu:</div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button type="button" onclick="quickLogin('an.nguyen@gmail.com', 'Nguyễn Văn An', 'CUSTOMER')" class="rounded-lg border border-slate-200 bg-slate-50 p-2 text-left hover:border-emerald-500 hover:bg-white transition cursor-pointer">
+              <div class="font-semibold text-slate-800 truncate">Nguyễn Văn An</div>
+              <div class="text-[10px] text-emerald-700">Khách hàng</div>
+            </button>
+            <button type="button" onclick="quickLogin('staff.huit@gmail.com', 'Trần Thu Hà', 'STAFF')" class="rounded-lg border border-slate-200 bg-slate-50 p-2 text-left hover:border-blue-500 hover:bg-white transition cursor-pointer">
+              <div class="font-semibold text-slate-800 truncate">Trần Thu Hà</div>
+              <div class="text-[10px] text-blue-700">Nhân viên trực quầy</div>
+            </button>
+            <button type="button" onclick="quickLogin('owner.fac01@gmail.com', 'Lê Hoàng', 'OWNER')" class="rounded-lg border border-slate-200 bg-slate-50 p-2 text-left hover:border-amber-500 hover:bg-white transition cursor-pointer">
+              <div class="font-semibold text-slate-800 truncate">Lê Hoàng</div>
+              <div class="text-[10px] text-amber-700">Chủ cơ sở</div>
+            </button>
+            <button type="button" onclick="quickLogin('admin.huit@gmail.com', 'Ban Quản Trị HUIT', 'ADMIN')" class="rounded-lg border border-slate-200 bg-slate-50 p-2 text-left hover:border-purple-500 hover:bg-white transition cursor-pointer">
+              <div class="font-semibold text-slate-800 truncate">Ban Quản Trị</div>
+              <div class="text-[10px] text-purple-700">Quản trị viên</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Điều khoản -->
+        <p class="text-[11px] text-slate-400 text-center leading-relaxed pt-1">
+          Bằng việc tiếp tục, bạn đồng ý với 
+          <a href="#" class="underline hover:text-slate-600">Điều khoản dịch vụ</a> và 
+          <a href="#" class="underline hover:text-slate-600">Chính sách bảo mật</a> của HUIT Sports.
+        </p>
+      </div>
+
+      <!-- Trở về trang chủ -->
+      <div class="mt-5">
+        <a href="/" class="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:border-emerald-500 hover:text-emerald-700 shadow-sm transition">
+          <i data-lucide="arrow-left" class="h-3.5 w-3.5"></i>
+          <span>Trở về Trang chủ ứng dụng</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Cột phải: Hình ảnh sân bóng đá mini (san_bong_da_mini.jpg) bo góc chuẩn Claude -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center">
+      <div class="w-full max-w-md lg:max-w-xl h-[440px] sm:h-[520px] lg:h-[600px] rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-white relative group">
+        <img th:src="@{/images/san_bong_da_mini.jpg}" src="/images/san_bong_da_mini.jpg"
+             alt="Sân bóng đá mini HUIT"
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 right-6 text-white">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-600/90 backdrop-blur-md px-3 py-1 text-xs font-semibold">
+            <i data-lucide="map-pin" class="h-3.5 w-3.5"></i> Cụm sân Tân Phú & Tân Bình
+          </span>
+          <h3 class="mt-2 text-lg sm:text-xl font-bold">Cụm sân cỏ nhân tạo đạt chuẩn</h3>
+          <p class="text-xs text-white/80 mt-0.5">Mở cửa 05:00 - 22:00 hàng ngày, đặt lịch giữ chỗ tiện lợi</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-7xl mx-auto px-6 py-4 text-center text-xs text-slate-400">
+    © 2026 Đồ án Các Hệ CSDL NoSQL – Trường Đại học Công Thương TP.HCM (HUIT).
+  </footer>
+
+  <script th:inline="javascript">
+    const DEFAULT_GOOGLE_CLIENT_ID = '389791032309-ha38ggklmlvjejqnvdeucoora43nn191.apps.googleusercontent.com';
+    const SERVER_GOOGLE_CLIENT_ID = /*[[${googleClientId}]]*/ '';
+    let currentGoogleClientId = SERVER_GOOGLE_CLIENT_ID || localStorage.getItem('sb_google_client_id') || DEFAULT_GOOGLE_CLIENT_ID;
+
+    lucide.createIcons();
+
+    // Khởi tạo Google Identity Services
+    function initGoogleAuth() {
+      if (typeof google === 'undefined' || !google.accounts || !google.accounts.id) {
+        setTimeout(initGoogleAuth, 250);
+        return;
+      }
+
+      if (currentGoogleClientId && currentGoogleClientId.trim() !== '') {
+        try {
+          google.accounts.id.initialize({
+            client_id: currentGoogleClientId,
+            callback: handleGoogleCredentialResponse,
+            auto_select: false,
+            cancel_on_tap_outside: true
+          });
+
+          // Hiển thị nút chuẩn của Google
+          const btnDiv = document.getElementById('googleButtonDiv');
+          if (btnDiv) {
+            btnDiv.innerHTML = '';
+            google.accounts.id.renderButton(btnDiv, {
+              theme: 'outline',
+              size: 'large',
+              type: 'standard',
+              shape: 'pill',
+              text: 'continue_with',
+              logo_alignment: 'left',
+              width: 360
+            });
+            // Ẩn nút fallback
+            const fallback = document.getElementById('googleFallbackDiv');
+            if (fallback) fallback.classList.add('hidden');
+          }
+
+          // Kích hoạt Google One Tap (Popup tự động hiện góc trên)
+          google.accounts.id.prompt();
+
+          const statusEl = document.getElementById('clientIdStatusText');
+          if (statusEl) statusEl.textContent = 'Google OAuth: Đã kết nối';
+        } catch (e) {
+          console.error('Lỗi khởi tạo Google GIS:', e);
+        }
+      } else {
+        const statusEl = document.getElementById('clientIdStatusText');
+        if (statusEl) statusEl.textContent = 'Chưa nạp Google Client ID (Click ⚙️ để nhập)';
+      }
+    }
+
+    // Nhận JWT ID Token từ Google sau khi người dùng chọn tài khoản Gmail
+    function handleGoogleCredentialResponse(response) {
+      try {
+        const idToken = response.credential;
+        // Giải mã payload JWT của Google
+        const base64Url = idToken.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        const profile = JSON.parse(jsonPayload);
+        console.log('Google Profile đã xác thực:', profile);
+
+        executeAuth(profile.email, profile.name || profile.email.split('@')[0], 'CUSTOMER', idToken, profile.picture);
+      } catch (err) {
+        console.error('Lỗi đọc phản hồi từ Google:', err);
+        alert('Không thể xác thực thông tin tài khoản Google');
+      }
+    }
+
+    // Xử lý khi nhấn nút Google nếu chưa cấu hình Client ID
+    function handleGoogleButtonClick() {
+      if (!currentGoogleClientId || currentGoogleClientId.trim() === '') {
+        const enteredId = prompt(
+          'Để mở hộp thoại chọn tài khoản Gmail thật của Google, bạn cần Google Client ID.\n\n' +
+          'Nhập Google Client ID của bạn (dạng: xxxx.apps.googleusercontent.com):',
+          localStorage.getItem('sb_google_client_id') || ''
+        );
+        if (enteredId && enteredId.trim()) {
+          saveClientId(enteredId.trim());
+          return;
+        }
+      }
+      
+      // Nếu người dùng không nhập, cho phép nhập email để tiếp tục
+      const email = prompt('Nhập địa chỉ Gmail để đăng nhập nhanh:', 'an.nguyen@gmail.com');
+      if (email && email.trim()) {
+        executeAuth(email.trim(), email.split('@')[0], 'CUSTOMER');
+      }
+    }
+
+    function promptConfigureClientId() {
+      const enteredId = prompt(
+        'Cài đặt Google OAuth 2.0 Client ID:\n(Lấy từ Google Cloud Console -> APIs & Services -> Credentials)',
+        currentGoogleClientId
+      );
+      if (enteredId !== null) {
+        saveClientId(enteredId.trim());
+      }
+    }
+
+    function saveClientId(id) {
+      currentGoogleClientId = id;
+      localStorage.setItem('sb_google_client_id', id);
+      alert('Đã lưu Google Client ID thành công! Trang sẽ tải lại để khởi tạo kết nối Google.');
+      window.location.reload();
+    }
+
+    async function executeAuth(email, name, role, idToken, avatarUrl) {
+      try {
+        const res = await fetch('/api/v1/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            idToken: idToken || '',
+            email: email,
+            name: name,
+            role: role || 'CUSTOMER',
+            avatarUrl: avatarUrl || ''
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.data) {
+          const auth = data.data;
+          localStorage.setItem('sb_user_id', auth.userId);
+          localStorage.setItem('sb_token', auth.token);
+          localStorage.setItem('sb_name', auth.fullName);
+          localStorage.setItem('sb_role', auth.role);
+          localStorage.setItem('sb_email', email);
+
+          alert(`Đăng nhập Google thành công!\nChào mừng: ${auth.fullName} (${auth.role})`);
+          if (auth.role === 'ADMIN' || auth.role === 'STAFF' || auth.role === 'OWNER') {
+            window.location.href = '/admin';
+          } else {
+            window.location.href = '/';
+          }
+        } else {
+          alert('Đăng nhập thất bại: ' + (data.message || 'Lỗi không xác định'));
+        }
+      } catch (err) {
+        alert('Lỗi kết nối máy chủ API: ' + err.message);
+      }
+    }
+
+    function loginWithCustomEmail() {
+      const val = document.getElementById('emailInput').value.trim();
+      if (!val || !val.includes('@')) {
+        alert('Vui lòng nhập email hợp lệ!');
+        return;
+      }
+      executeAuth(val, val.split('@')[0], 'CUSTOMER');
+    }
+
+    function quickLogin(email, name, role) {
+      executeAuth(email, name, role);
+    }
+
+    window.addEventListener('DOMContentLoaded', initGoogleAuth);
+  </script>
+</body>
+</html>

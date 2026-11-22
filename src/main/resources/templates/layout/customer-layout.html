@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Fragment Header & Điều hướng phân quyền (Dùng chung cho toàn hệ thống) -->
+<header th:fragment="topHeader" class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <div class="flex items-center gap-4">
+      <a href="#home" class="flex items-center gap-2 font-bold text-emerald-700 text-lg">
+        <i data-lucide="trophy" class="h-5 w-5"></i>HUIT Sports
+      </a>
+      <nav class="nav flex flex-wrap gap-1" id="nav"></nav>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- Bộ chuyển đổi vai trò nhanh phục vụ Demo 26 Use Cases -->
+      <div class="flex items-center gap-1.5 rounded-xl bg-slate-100 px-2.5 py-1 text-xs">
+        <span class="text-slate-500">Vai trò:</span>
+        <select id="roleSelect" class="bg-transparent font-semibold text-emerald-700 outline-none cursor-pointer" onchange="changeRole(this.value)">
+          <option value="ALL">Tất cả (Demo)</option>
+          <option value="CUSTOMER">Khách hàng (CUSTOMER)</option>
+          <option value="STAFF">Nhân viên (STAFF)</option>
+          <option value="OWNER">Chủ cơ sở (OWNER)</option>
+          <option value="ADMIN">Quản trị (ADMIN)</option>
+        </select>
+      </div>
+
+      <!-- Chuông thông báo (MongoDB notifications + Redis Pub/Sub) -->
+      <div class="relative">
+        <button onclick="toggleNotif()" class="relative rounded-xl border border-slate-200 p-2 hover:border-emerald-500">
+          <i data-lucide="bell" class="h-4 w-4 text-slate-600"></i>
+          <span class="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-rose-500 text-[10px] font-bold text-white" id="notifCount">2</span>
+        </button>
+        <div id="notifBox" class="hidden absolute right-0 mt-2 w-80 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl z-40">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <b class="text-sm">Thông báo (TTL 90 ngày)</b>
+            <span class="text-xs text-emerald-600 cursor-pointer" onclick="$('#notifCount').classList.add('hidden')">Đánh dấu đã đọc</span>
+          </div>
+          <div class="mt-2 space-y-2.5 text-xs">
+            <div class="rounded-xl bg-emerald-50 p-2.5">
+              <b class="text-emerald-800">Có chỗ trống (WAITLIST_SLOT_FREE)</b>
+              <p class="mt-0.5 text-slate-600">Sân FAC01-FB-01 khung 18:00 ngày 20/11 vừa trống. Đặt ngay!</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-2.5">
+              <b>Đơn BK-20261120-0001 đã xác nhận</b>
+              <p class="mt-0.5 text-slate-500">Đã nhận cọc 210.000đ cho sân FAC01-FB-01.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nút Hồ sơ & Đăng nhập (UC01, UC02, UC03) -->
+      <button onclick="go('auth')" class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:border-emerald-500">
+        <span class="grid h-6 w-6 place-items-center rounded-full bg-emerald-100 font-bold text-emerald-700">A</span>
+        <span id="currentUserLabel">Nguyễn Văn An</span>
+      </button>
+    </div>
+  </div>
+</header>
+</body>
+</html>

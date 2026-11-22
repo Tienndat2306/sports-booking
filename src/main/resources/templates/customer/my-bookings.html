@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 2] Đơn đặt sân của tôi, Hủy/Đổi lịch & Dòng sự kiện (UC12, UC15, UC19) -->
+<section th:fragment="myBookingsSection" id="bookings" class="scr">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <span class="tag bg-emerald-50 text-emerald-700">Lịch sử đặt sân</span>
+      <h1 class="mt-1 text-2xl font-bold">Đơn đặt sân của tôi</h1>
+    </div>
+    <div class="flex flex-wrap gap-1.5">
+      <span class="chip on" onclick="filterMyBookings('ALL', this)">Tất cả</span>
+      <span class="chip" onclick="filterMyBookings('CONFIRMED', this)">Đã xác nhận</span>
+      <span class="chip" onclick="filterMyBookings('COMPLETED', this)">Hoàn thành</span>
+      <span class="chip" onclick="filterMyBookings('CANCELED', this)">Đã hủy</span>
+    </div>
+  </div>
+  <div class="mt-5 space-y-4" id="myBookingList"></div>
+</section>
+</body>
+</html>

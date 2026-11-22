@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 3] Khối Mạng xã hội kết bạn & Gợi ý từ Đồ thị Neo4j (UC16, UC18) -->
+<div th:fragment="socialSidebar" class="space-y-4">
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <b class="text-sm text-slate-800">🤝 Gợi ý bạn chơi phù hợp</b>
+      <span class="text-[11px] text-emerald-700 font-medium">Cùng trình độ</span>
+    </div>
+    <div class="mt-3 space-y-3 text-sm" id="mates"></div>
+  </div>
+
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <b class="text-sm text-slate-800">🏟️ Sân gợi ý cho bạn</b>
+      <span class="text-[11px] text-slate-400">Hay đặt gần đây</span>
+    </div>
+    <div class="mt-3 space-y-2.5 text-xs">
+      <div class="flex items-center justify-between rounded-xl bg-slate-50 p-2.5">
+        <div>
+          <b class="text-slate-800">FAC01-FB-01 · Sân bóng đá 1</b>
+          <div class="text-slate-500">Bạn đã đặt 3 lần · 4 người bạn cũng đặt</div>
+        </div>
+        <button class="btn2 !px-2.5 !py-1 text-xs" onclick="go('schedule')">Đặt lại</button>
+      </div>
+      <div class="flex items-center justify-between rounded-xl bg-slate-50 p-2.5">
+        <div>
+          <b class="text-slate-800">FAC01-BM-01 · Sân cầu lông 1</b>
+          <div class="text-slate-500">Cùng trình độ Level 2–3 hay chơi</div>
+        </div>
+        <button class="btn2 !px-2.5 !py-1 text-xs" onclick="go('schedule')">Xem lịch</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

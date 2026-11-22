@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 2] Thanh toán Đặt cọc & Đồng hồ đếm ngược 5 phút (UC10, UC11, UC15) -->
+<section th:fragment="checkoutPaymentSection" id="checkout" class="scr">
+  <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-500 bg-amber-50 p-4 text-amber-900">
+    <div class="flex items-center gap-2.5">
+      <i data-lucide="hourglass" class="h-5 w-5 text-amber-700"></i>
+      <div>
+        <div class="font-bold">Đang giữ chỗ cho bạn (Thời gian còn lại)</div>
+        <div class="text-xs">Vui lòng hoàn tất thanh toán cọc trong 5 phút trước khi khung giờ được mở lại cho người khác.</div>
+      </div>
+    </div>
+    <b class="text-2xl font-bold tabular-nums text-amber-800" id="cd">05:00</b>
+  </div>
+
+  <div class="mt-5 grid gap-5 md:grid-cols-5">
+    <div class="card md:col-span-3 space-y-4">
+      <h2 class="font-bold text-lg">Xác nhận thông tin & Thanh toán</h2>
+      <div>
+        <label class="text-xs font-semibold uppercase text-slate-400">1. Mức thanh toán</label>
+        <div class="mt-1.5 flex flex-wrap gap-2">
+          <span class="chip on" onclick="selectChip(this)">Đặt cọc 30% (210.000đ)</span>
+          <span class="chip" onclick="selectChip(this)">Thanh toán đủ 100% (700.000đ)</span>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold uppercase text-slate-400">2. Phương thức thanh toán</label>
+        <div class="mt-1.5 flex flex-wrap gap-2">
+          <span class="chip on" onclick="selectChip(this)">Ví MoMo / VNPay</span>
+          <span class="chip" onclick="selectChip(this)">Chuyển khoản VietQR (TRANSFER)</span>
+        </div>
+      </div>
+      <div class="grid h-40 place-items-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-center text-xs text-slate-500">
+        <div>
+          <i data-lucide="qr-code" class="mx-auto h-14 w-14 text-emerald-600"></i>
+          <div class="mt-2 font-medium text-slate-700">Mã VietQR thanh toán nhanh</div>
+          <div class="text-[11px] text-slate-400">Quét mã bằng app ngân hàng để chuyển khoản</div>
+        </div>
+      </div>
+      <input class="in" placeholder="Ghi chú đơn đặt sân (VD: Đặt sân giao hữu tối thứ Sáu)">
+      <div class="flex flex-wrap gap-2 pt-2">
+        <button class="btn flex-1" onclick="confirmBookingSuccess()"><i data-lucide="check-circle" class="h-4 w-4"></i>Xác nhận thanh toán</button>
+        <button class="btn2" onclick="cancelHoldAndBack()">Hủy giữ chỗ</button>
+      </div>
+    </div>
+
+    <div class="card md:col-span-2 text-sm space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <span class="font-bold text-base">Hóa đơn tạm tính</span>
+        <span class="tag bg-amber-100 text-amber-800">Đang giữ chỗ</span>
+      </div>
+      <div>
+        <div class="font-semibold">Tổ hợp Thể thao HUIT Cơ sở 1 (FAC01)</div>
+        <div class="text-slate-500">Sân: FAC01-FB-01 (Bóng đá 5 người) · Tối đa 10 người</div>
+        <div class="text-slate-500">Ngày: 20/11/2026 · Khung: 18:00, 19:00</div>
+      </div>
+      <div class="border-t border-slate-100 pt-2 space-y-1">
+        <div class="flex justify-between"><span>Khung 18:00 – 19:00 (Giờ cao điểm)</span><span>350.000đ</span></div>
+        <div class="flex justify-between"><span>Khung 19:00 – 20:00 (Giờ cao điểm)</span><span>350.000đ</span></div>
+        <div class="flex justify-between font-bold pt-1 text-slate-900"><span>Tổng cộng</span><span>700.000đ</span></div>
+        <div class="flex justify-between text-emerald-700 font-bold"><span>Tiền cọc 30% (depositVnd)</span><span>210.000đ</span></div>
+      </div>
+      <div class="rounded-xl bg-slate-50 p-3 text-xs text-slate-600 space-y-1">
+        <div class="font-bold text-slate-700">Bản chụp chính sách (policySnapshot: POL-FAC01-v1):</div>
+        <div>• Hủy trước ≥ 24 giờ: Hoàn 100% tiền cọc</div>
+        <div>• Hủy trước ≥ 6 giờ: Hoàn 50% tiền cọc</div>
+        <div>• Hủy dưới 6 giờ: Không hoàn cọc (0%)</div>
+        <div>• Thời gian ân hạn check-in: 15 phút</div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

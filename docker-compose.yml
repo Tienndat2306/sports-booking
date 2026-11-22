@@ -1,0 +1,3 @@
+# File hỗ trợ chạy lệnh `docker compose up -d` trực tiếp từ thư mục gốc của dự án
+include:
+  - sports-booking-db/docker-compose.yml

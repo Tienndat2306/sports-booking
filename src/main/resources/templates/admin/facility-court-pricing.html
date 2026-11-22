@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- [Module 1 & 2] Quản trị Cơ sở, 10 Sân, Bảng giá, Chính sách, Bảo trì, Khách hàng & Danh mục -->
+<section th:fragment="facilityAdminSection" id="admin" class="scr">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <span class="tag bg-emerald-50 text-emerald-700">Quản trị hệ thống</span>
+      <h1 class="mt-1 text-2xl font-bold">Quản trị Cơ sở, Sân & Chính sách</h1>
+    </div>
+  </div>
+
+  <!-- Thanh chọn 6 Sub-tabs Quản trị -->
+  <div class="mt-4 flex flex-wrap gap-2">
+    <span class="chip on" onclick="switchAdminSubTab('subtab-courts', this)">1. Cơ sở & Sân đấu</span>
+    <span class="chip" onclick="switchAdminSubTab('subtab-pricing', this)">2. Bảng giá theo giờ</span>
+    <span class="chip" onclick="switchAdminSubTab('subtab-policy', this)">3. Chính sách đặt sân</span>
+    <span class="chip" onclick="switchAdminSubTab('subtab-maintenance', this)">4. Lịch bảo trì sân</span>
+    <span class="chip" onclick="switchAdminSubTab('subtab-users', this)">5. Khách hàng & Tài khoản</span>
+    <span class="chip" onclick="switchAdminSubTab('subtab-categories', this)">6. Danh mục hệ thống</span>
+  </div>
+
+  <div class="card mt-4">
+    <!-- Tab 1: Cơ sở & 10 Sân -->
+    <div id="subtab-courts" class="admin-subtab overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr><th>Mã sân</th><th>Cơ sở</th><th>Môn thể thao</th><th>Tên sân</th><th>Đặc điểm sân</th><th>Tiện ích</th><th>Trạng thái</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="font-bold text-emerald-700">FAC01-FB-01</td><td>FAC01</td><td>Bóng đá 5</td><td>Sân bóng đá 1</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Đèn chiếu sáng</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-FB-02</td><td>FAC01</td><td>Bóng đá 5</td><td>Sân bóng đá 2</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Đèn chiếu sáng</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-FB-03</td><td>FAC01</td><td>Bóng đá 5</td><td>Sân bóng đá 3 (Mái che)</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Mái che cao cấp</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-BM-01</td><td>FAC01</td><td>Cầu lông</td><td>Sân cầu lông 1</td><td class="text-xs text-slate-500">Trong nhà, Thảm PVC tiêu chuẩn, Máy lạnh</td><td class="text-xs">WC, Thuê vợt</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-BM-02</td><td>FAC01</td><td>Cầu lông</td><td>Sân cầu lông 2</td><td class="text-xs text-slate-500">Trong nhà, Thảm PVC tiêu chuẩn, Máy lạnh</td><td class="text-xs">WC, Thuê vợt</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-BM-03</td><td>FAC01</td><td>Cầu lông</td><td>Sân cầu lông 3</td><td class="text-xs text-slate-500">Trong nhà, Thảm PVC tiêu chuẩn</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC01-VB-01</td><td>FAC01</td><td>Bóng chuyền</td><td>Sân bóng chuyền 1</td><td class="text-xs text-slate-500">Ngoài trời, Mặt sân cát, Đèn chiếu sáng</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC02-FB-01</td><td>FAC02</td><td>Bóng đá 5</td><td>Sân bóng đá 2A</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Đèn chiếu sáng</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC02-FB-02</td><td>FAC02</td><td>Bóng đá 5</td><td>Sân bóng đá 2B</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Đèn chiếu sáng</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+          <tr><td class="font-bold text-emerald-700">FAC02-FB-03</td><td>FAC02</td><td>Bóng đá 5</td><td>Sân bóng đá 2C (Mái che)</td><td class="text-xs text-slate-500">Cỏ nhân tạo, 5x5, Mái che cao cấp</td><td class="text-xs">WC, Bãi giữ xe</td><td><span class="tag bg-emerald-50 text-emerald-700">Hoạt động</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab 2: Bảng giá -->
+    <div id="subtab-pricing" class="admin-subtab hidden overflow-x-auto">
+      <table class="w-full">
+        <thead><tr><th>Mã quy tắc</th><th>Cơ sở</th><th>Môn</th><th>Áp dụng ngày</th><th>Giờ thường (05:00–17:00)</th><th>Giờ cao điểm (17:00–22:00)</th></tr></thead>
+        <tbody>
+          <tr><td class="font-medium text-slate-700">PR-FAC01-FB</td><td>FAC01</td><td>Bóng đá 5</td><td>Tất cả các ngày</td><td><input class="in !w-32" value="220.000"></td><td><input class="in !w-32" value="350.000"></td></tr>
+          <tr><td class="font-medium text-slate-700">PR-FAC01-BM</td><td>FAC01</td><td>Cầu lông</td><td>Tất cả các ngày</td><td><input class="in !w-32" value="80.000"></td><td><input class="in !w-32" value="120.000"></td></tr>
+          <tr><td class="font-medium text-slate-700">PR-FAC01-VB</td><td>FAC01</td><td>Bóng chuyền</td><td>Tất cả các ngày</td><td><input class="in !w-32" value="180.000"></td><td><input class="in !w-32" value="260.000"></td></tr>
+          <tr><td class="font-medium text-slate-700">PR-FAC02-FB</td><td>FAC02</td><td>Bóng đá 5</td><td>Tất cả các ngày</td><td><input class="in !w-32" value="200.000"></td><td><input class="in !w-32" value="320.000"></td></tr>
+        </tbody>
+      </table>
+      <button class="btn mt-4" onclick="alert('Đã lưu bảng giá giờ sân thành công!')">Lưu bảng giá</button>
+    </div>
+
+    <!-- Tab 3: Chính sách -->
+    <div id="subtab-policy" class="admin-subtab hidden">
+      <div class="text-xs text-emerald-700 font-semibold mb-3">Phiên bản chính sách hiện hành: Phiên bản 1.0 (Đang áp dụng)</div>
+      <div class="grid gap-4 sm:grid-cols-4 text-sm">
+        <label>Tỷ lệ đặt cọc (%)<input type="number" class="in mt-1" value="30"></label>
+        <label>Thời gian giữ chỗ (phút)<input type="number" class="in mt-1" value="5"></label>
+        <label>Thời gian ân hạn trễ sân (phút)<input type="number" class="in mt-1" value="15"></label>
+        <label>Giới hạn số lần vắng mặt tối đa<input type="number" class="in mt-1" value="3"></label>
+      </div>
+      <div class="mt-4 space-y-2 text-sm">
+        <div class="font-semibold text-slate-800">Quy định hoàn tiền khi hủy đặt sân:</div>
+        <div class="flex items-center gap-2">Mức 1: Báo hủy trước <input class="in !w-20" value="24"> giờ → Hoàn <input class="in !w-20" value="100"> % tiền cọc</div>
+        <div class="flex items-center gap-2">Mức 2: Báo hủy trước <input class="in !w-20" value="6"> giờ → Hoàn <input class="in !w-20" value="50"> % tiền cọc</div>
+        <div class="flex items-center gap-2">Mức 3: Báo hủy trước <input class="in !w-20" value="0"> giờ → Hoàn <input class="in !w-20" value="0"> % tiền cọc</div>
+      </div>
+      <button class="btn mt-4" onclick="alert('Đã cập nhật chính sách đặt sân thành công!')">Lưu chính sách</button>
+    </div>
+
+    <!-- Nhúng Tab 4, 5, 6 từ file maintenance-audit-users.html -->
+    <div th:replace="~{admin/maintenance-audit-users :: maintenanceUsersTabs}"></div>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Fragment chứa các Modal tương tác dùng chung giữa các phân hệ -->
+<div th:fragment="globalModals">
+  <!-- Modal 1: Đăng ký Danh sách chờ - Waitlist khi khung giờ kín -->
+  <div id="waitlistModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-slate-900/50 p-4">
+    <div class="card w-full max-w-md space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <b class="text-lg text-slate-800">Đăng ký Danh sách chờ</b>
+        <button onclick="closeModal('waitlistModal')" class="text-slate-400 hover:text-slate-700">✕</button>
+      </div>
+      <p class="text-sm text-slate-600" id="waitlistDesc">Khung giờ này hiện đang có người giữ hoặc đã đặt.</p>
+      <div class="rounded-xl bg-emerald-50 p-3 text-xs text-emerald-800">
+        Khi khung giờ được trả lại hoặc bị hủy, hệ thống sẽ tự động gửi thông báo ưu tiên đến bạn ngay lập tức.
+      </div>
+      <div class="flex justify-end gap-2">
+        <button class="btn2" onclick="closeModal('waitlistModal')">Để sau</button>
+        <button class="btn" onclick="confirmWaitlist()">Đăng ký nhận thông báo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Đăng kèo giao lưu mới -->
+  <div id="createMatchModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-slate-900/50 p-4">
+    <div class="card w-full max-w-lg space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <b class="text-lg text-slate-800">Đăng kèo tuyển người chơi</b>
+        <button onclick="closeModal('createMatchModal')" class="text-slate-400">✕</button>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 text-sm">
+        <label class="sm:col-span-2">Tiêu đề kèo giao lưu<input id="mTitle" class="in mt-1" value="Giao lưu bóng đá 5v5 tối thứ Bảy (Cần thêm 2 bạn)"></label>
+        <label>Môn thể thao
+          <select id="mSport" class="in mt-1">
+            <option value="FOOTBALL5">Bóng đá 5 người</option>
+            <option value="BADMINTON">Cầu lông</option>
+            <option value="VOLLEYBALL">Bóng chuyền</option>
+          </select>
+        </label>
+        <label>Địa điểm sân
+          <select id="mCourt" class="in mt-1">
+            <option value="FAC01-FB-01">FAC01-FB-01 · Sân bóng đá 1</option>
+            <option value="FAC01-BM-01">FAC01-BM-01 · Sân cầu lông 1</option>
+          </select>
+        </label>
+        <label>Số người cần tuyển<input id="mNeeded" type="number" class="in mt-1" value="2"></label>
+        <label>Trình độ yêu cầu (Cấp độ)<input id="mLevel" class="in mt-1" value="2 – 4"></label>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button class="btn2" onclick="closeModal('createMatchModal')">Hủy</button>
+        <button class="btn" onclick="submitNewMatch()">Đăng kèo giao lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Đặt hộ tại quầy cho khách vãng lai -->
+  <div id="walkinModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-slate-900/50 p-4">
+    <div class="card w-full max-w-lg space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <b class="text-lg text-slate-800">Đặt sân tại quầy – Khách vãng lai</b>
+        <button onclick="closeModal('walkinModal')" class="text-slate-400">✕</button>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 text-sm">
+        <label>Tên khách hàng<input id="wkName" class="in mt-1" placeholder="VD: Anh Nam (Khách vãng lai)"></label>
+        <label>Số điện thoại liên hệ<input id="wkPhone" class="in mt-1" placeholder="Nhập số điện thoại"></label>
+        <label>Chọn sân
+          <select id="wkCourt" class="in mt-1">
+            <option value="FAC01-FB-01">FAC01-FB-01 · Sân bóng đá 1</option>
+            <option value="FAC01-BM-01">FAC01-BM-01 · Sân cầu lông 1</option>
+            <option value="FAC02-FB-01">FAC02-FB-01 · Sân bóng đá 2A</option>
+          </select>
+        </label>
+        <label>Khung giờ thi đấu<input id="wkSlot" class="in mt-1" value="20:00"></label>
+        <label>Hình thức thu tiền
+          <select class="in mt-1"><option>Tiền mặt tại quầy (CASH)</option><option>Chuyển khoản QR (TRANSFER)</option></select>
+        </label>
+        <label>Số tiền thu (VNĐ)<input id="wkAmount" class="in mt-1" value="350.000đ"></label>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button class="btn2" onclick="closeModal('walkinModal')">Hủy</button>
+        <button class="btn" onclick="submitWalkinBooking()">Chốt sân & Xuất phiếu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Lịch sử sự kiện đơn hàng -->
+  <div id="eventModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-slate-900/50 p-4">
+    <div class="card w-full max-w-lg space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <b class="text-lg text-slate-800" id="eventModalTitle">Lịch sử sự kiện đơn hàng</b>
+        <button onclick="closeModal('eventModal')" class="text-slate-400">✕</button>
+      </div>
+      <div id="eventModalBody" class="space-y-2.5 text-sm"></div>
+      <div class="flex justify-end pt-2">
+        <button class="btn2" onclick="closeModal('eventModal')">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
